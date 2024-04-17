@@ -1,44 +1,18 @@
 <?php
 
-// 要查询的域名
-$domain = 'alist.xf110.v6.rocks';
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>o</mi><mi>m</mi><mi>a</mi><mi>i</mi><mi>n</mi><msup><mo>=</mo><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mi>a</mi><mi>l</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi mathvariant="normal">.</mi><mi>x</mi><mi>f</mi><mn>110.</mn><mi>v</mi><mn>6.</mn><mi>r</mi><mi>o</mi><mi>c</mi><mi>k</mi><msup><mi>s</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo separator="true">;</mo></mrow><annotation encoding="application/x-tex">domain = &#x27;alist.xf110.v6.rocks&#x27;;
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">o</span><span class="mord mathnormal">main</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mrel">=</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9463em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">i</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord">.</span><span class="mord mathnormal">x</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord">110.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord">6.</span><span class="mord mathnormal">roc</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mpunct">;</span></span></span></span>type = 'TXT';
 
-// 构建查询URL
-$url = 'https://dns.google/resolve?name=' . $domain . '&type=TXT';
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>d</mi><mi>s</mi><mo>=</mo><mi>d</mi><mi>n</mi><msub><mi>s</mi><mi>g</mi></msub><mi>e</mi><msub><mi>t</mi><mi>r</mi></msub><mi>e</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>d</mi><mo stretchy="false">(</mo></mrow><annotation encoding="application/x-tex">records = dns_get_record(</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">recor</span><span class="mord mathnormal">d</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">n</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mord mathnormal">e</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.02778em;">ecor</span><span class="mord mathnormal">d</span><span class="mopen">(</span></span></span></span>domain, DNS_TXT);
 
-// 发起HTTP请求
-$response = file_get_contents($url);
-
-// 检查是否成功获取响应
-if ($response === false) {
-    echo '无法获取响应';
-    exit;
-}
-
-// 解析JSON响应
-$data = json_decode($response, true);
-
-// 检查是否成功解析JSON
-if ($data === null || !isset($data['Answer'])) {
-    echo '无法解析响应';
-    exit;
-}
-
-// 提取TXT记录
-$txtRecords = array();
-foreach ($data['Answer'] as $record) {
-    if ($record['type'] === 16) { // TXT记录的type为16
-        $txtRecords[] = $record['data'];
+if ($records) {
+    foreach ($records as $record) {
+        if ($record['type'] === $type) {
+            echo "TXT Record: " . $record['txt'] . PHP_EOL;
+        }
     }
-}
-
-// 打印TXT记录
-if (empty($txtRecords)) {
-    echo '未找到TXT记录';
 } else {
-    echo 'TXT记录：' . PHP_EOL;
-    foreach ($txtRecords as $txtRecord) {
-        echo $txtRecord . PHP_EOL;
-    }
+    echo "无法获取$domain的$type记录。";
 }
 
+?>
