@@ -1,18 +1,63 @@
 <?php
+//https://sztv-live.cutv.com/info.json  //获取频道
+error_reporting(0);
+$header = [
+          "Referer:https://www.sztv.com.cn/",
+       ];
+$ts = $_GET['ts'];
+if(!$ts){
+$id = isset($_GET['id'])?$_GET['id']:'szws';
+$n = [
+    //tv
+    'szws' => ['AxeFRth','http://sztv-live.cutv.com'], //深圳卫视
+    'szyl' => ['1q4iPng','http://sztv-live.cutv.com'], //深圳娱乐
+    'szse' => ['1SIQj6s','http://sztv-live.cutv.com'], //深圳少儿
+    'szgg' => ['2q76Sw2','http://sztv-live.cutv.com'], //深圳公共
+    'szcjsh' => ['3vlcoxP','http://sztv-live.cutv.com'], //深圳财*
+    'szdsj' => ['4azbkoY','http://sztv-live.cutv.com'], //深圳电视剧
+    'yhgw' => ['BJ5u5k2','http://sztv-live.cutv.com'], //宜和购物
+    'szds' => ['ZwxzUXr','http://sztv-live.cutv.com'], //深圳都市
+    'szgj' => ['sztvgjpd','http://sztv-live.cutv.com'], //深圳国际
+    'szyd' => ['wDF6KJ3','http://sztv-live.cutv.com'], //深圳移动
+        //gb
+    'ba1' => ['Qr45J1U','http://sztv-live.cutv.com'], //宝安fm1043
+    'fy' => ['bPHSw12','http://sztv-live.cutv.com'], //飞扬971
+    'ba2' => ['g0c7BL1','http://sztv-live.cutv.com'], //宝安fm905
+    'xf' => ['ms3M6DA','http://sztv-live.cutv.com'], //先锋898
+    'sj' => ['sf4orL8','http://sztv-live.cutv.com'], //私家车广播
+    'kl' => ['171m21B','http://sztv-live.cutv.com'], //快乐106.2
 
-<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>o</mi><mi>m</mi><mi>a</mi><mi>i</mi><mi>n</mi><msup><mo>=</mo><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mi>a</mi><mi>l</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi mathvariant="normal">.</mi><mi>x</mi><mi>f</mi><mn>110.</mn><mi>v</mi><mn>6.</mn><mi>r</mi><mi>o</mi><mi>c</mi><mi>k</mi><msup><mi>s</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo separator="true">;</mo></mrow><annotation encoding="application/x-tex">domain = &#x27;alist.xf110.v6.rocks&#x27;;
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">o</span><span class="mord mathnormal">main</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mrel">=</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9463em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">i</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord">.</span><span class="mord mathnormal">x</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord">110.</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord">6.</span><span class="mord mathnormal">roc</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mpunct">;</span></span></span></span>type = 'TXT';
+];
+  $pid = $n[$id][0];
+  $http_prefix = $n[$id][1];
+  $t = time();
+  $m='/500/';
+  if(strlen($id) < 4)$m='/64/';
+  $token = md5($t . $pid . 'cutvLiveStream|Dream2017');
+  $bstrURL = "http://cls2.cutv.com/getCutvHlsLiveKey?t=" . $t . "&token=" . $token . "&id=" . $pid."";//&at=1
+  $dynamic_id = get_data($bstrURL,$header);
+  $playurl = $http_prefix . '/' . $pid . $m. $dynamic_id . '.m3u8';
+  $burl = dirname($playurl)."/";
+  $host = "http://".$_SERVER ['HTTP_HOST'].$_SERVER['PHP_SELF']; //如果你网站协议头是https，将http换成https;
+  $playurl_data = get_data($playurl,$header);
+  header('Content-Type: application/vnd.apple.mpegurl');
+  header("Content-Disposition: attachment; filename=index.m3u8");
+  print_r(preg_replace("/(.*?.ts)/i", $host."?ts=$burl$1",$playurl_data));
+  }else{
+  $data = get_data($ts,$header);
+  header('Content-Type: video/MP2T');
+  header("Content-Disposition: attachment; filename=".time().".ts");
+  print_r($data);die;
+  }
 
-<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>d</mi><mi>s</mi><mo>=</mo><mi>d</mi><mi>n</mi><msub><mi>s</mi><mi>g</mi></msub><mi>e</mi><msub><mi>t</mi><mi>r</mi></msub><mi>e</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>d</mi><mo stretchy="false">(</mo></mrow><annotation encoding="application/x-tex">records = dns_get_record(</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">recor</span><span class="mord mathnormal">d</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">n</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mord mathnormal">e</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.02778em;">ecor</span><span class="mord mathnormal">d</span><span class="mopen">(</span></span></span></span>domain, DNS_TXT);
-
-if ($records) {
-    foreach ($records as $record) {
-        if ($record['type'] === $type) {
-            echo "TXT Record: " . $record['txt'] . PHP_EOL;
-        }
-    }
-} else {
-    echo "无法获取$domain的$type记录。";
+function get_data($url,$header){
+   $ch = curl_init($url);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
+   curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE); 
+   curl_setopt($ch, CURLOPT_HTTPHEADER,$header);
+   $data = curl_exec($ch);
+   curl_close($ch);
+   return $data;
 }
-
 ?>
